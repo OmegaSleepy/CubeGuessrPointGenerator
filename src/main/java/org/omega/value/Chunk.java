@@ -48,4 +48,18 @@ public record Chunk(int chunkX, int chunkZ, Section[] sections, long[] heightmap
 
     }
 
+    public PointXZ getGlobalFromLocal(PointXZ local) {
+        int globalX = local.x() + chunkX*16;
+        int globalZ = local.z() + chunkZ*16;
+
+        return new PointXZ(globalX, globalZ);
+    }
+
+    public static PointXZ getLocalFromGlobal(PointXZ global) {
+        int localX = Math.floorMod(global.x(), 16);
+        int localZ = Math.floorMod(global.z(), 16);
+
+        return new PointXZ(localX, localZ);
+    }
+
 }
