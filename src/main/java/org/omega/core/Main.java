@@ -36,7 +36,9 @@ public class Main {
         long start = System.currentTimeMillis();
         var algorithm = new SimpleAlgorithm();
         List<PointXYZ> points = algorithm.genPoints(100);
+        points = points.stream().filter(Objects::nonNull).toList();
         System.out.println("points = " + points);
+        System.out.println("points_count = " + points.size());
         System.out.println(((System.currentTimeMillis()-start)*1e-3) + "sec");
     }
 
