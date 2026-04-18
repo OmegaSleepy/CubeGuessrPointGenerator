@@ -45,7 +45,7 @@ public class World {
         int relChunkX = Math.floorMod(chunkX, 32);
         int relChunkZ = Math.floorMod(chunkZ, 32);
 
-        return region.getChunks()[relChunkX][relChunkZ].getBlock(pointXYZ.x(), pointXYZ.y(), pointXYZ.z());
+        return region.getChunk(relChunkX,relChunkZ).getBlock(pointXYZ.x(), pointXYZ.y(), pointXYZ.z());
     }
 
     public static Region getRegion (PointXZ pointXZ) throws IOException {
@@ -66,6 +66,36 @@ public class World {
         }
 
         return region;
+
+    }
+
+    public static Chunk getChunkFromBlockCoordinate (PointXZ pointXZ) throws IOException {
+        int chunkX = pointXZ.x() >> 4;
+        int chunkZ = pointXZ.z() >> 4;
+
+        int regionX = chunkX >> 5; // Same as / 32
+        int regionZ = chunkZ >> 5;
+
+        RegionKey key = new RegionKey(regionX, regionZ);
+
+        Region region = regionCache.get(key);
+
+        if (region == null) {
+            File regionFile = new File("/home/martin/Documents/old world/s1/world/region/r.%s.%s.mca"
+                    .formatted(regionX, regionZ));
+
+            if (!regionFile.exists()) {
+                return null;
+            }
+
+            region = new Region(regionX, regionZ, regionFile);
+            regionCache.put(key, region);
+        }
+
+        int relChunkX = Math.floorMod(chunkX, 32);
+        int relChunkZ = Math.floorMod(chunkZ, 32);
+
+        return region.getChunk(relChunkX, relChunkZ);
 
     }
 
