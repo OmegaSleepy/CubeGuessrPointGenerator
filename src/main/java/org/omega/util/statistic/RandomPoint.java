@@ -21,7 +21,7 @@ public class RandomPoint {
 
     }
 
-    public static PointXYZ randomBoundPointXZ(PointXZ region){
+    public static PointXZ randomBoundPointXZ(PointXZ region){
 
         int xBound = region.x()*512;
         int zBound = region.z()*512;
