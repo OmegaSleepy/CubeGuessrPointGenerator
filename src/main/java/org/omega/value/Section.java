@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Section {
     private final List<String> palette;
-    private final short[] blockIds; // 4096 entries (16^3)
+    private final long[] blockIds; // 4096 entries (16^3)
 
-    public Section(List<String> palette, short[] blockIds) {
+    public Section(List<String> palette, long[] blockIds) {
         this.palette = palette;
         this.blockIds = blockIds;
     }
