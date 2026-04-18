@@ -1,0 +1,48 @@
+package org.omega.value;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class World {
+
+    private static final Map<RegionKey, Region> regionCache = new HashMap<>();
+
+    private record RegionKey(int x, int z) {
+    }
+
+    public static String getBlock (PointXYZ pointXYZ) throws IOException {
+        int chunkX = pointXYZ.x() >> 4;
+        int chunkZ = pointXYZ.z() >> 4;
+
+        int regionX = chunkX >> 5; // Same as / 32
+        int regionZ = chunkZ >> 5;
+
+        RegionKey key = new RegionKey(regionX, regionZ);
+
+        Region region = regionCache.get(key);
+
+        if (region == null) {
+            File regionFile = new File("/home/martin/Documents/old world/s1/world/region/r.%s.%s.mca"
+                    .formatted(regionX, regionZ));
+
+            if (!regionFile.exists()) {
+                return "minecraft:air";
+            }
+
+            region = new Region(regionX, regionZ, regionFile);
+            regionCache.put(key, region);
+            System.out.println("Loaded region: " + regionX + ", " + regionZ);
+        }
+
+        int relChunkX = Math.floorMod(chunkX, 32);
+        int relChunkZ = Math.floorMod(chunkZ, 32);
+
+        return region.getChunks()[relChunkX][relChunkZ].getBlock(pointXYZ.x(), pointXYZ.y(), pointXYZ.z());
+    }
+
+    public static void clearCache () {
+        regionCache.clear();
+    }
+}
