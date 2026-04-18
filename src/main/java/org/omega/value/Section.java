@@ -26,4 +26,8 @@ public class Section {
 
         return palette.get(paletteIndex);
     }
+
+    public List<String> getPalette () {
+        return palette;
+    }
 }
