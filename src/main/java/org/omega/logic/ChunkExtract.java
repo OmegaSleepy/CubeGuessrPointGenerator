@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ChunkExtract {
-    public static Chunk extract(IChunk iChunk) throws IOException {
+    public static Chunk extract(IChunk iChunk) throws IOException, NullPointerException{
 
         List<List<String>> sectionBlockPallets = iChunk.getNBTData().getList("sections").getData().stream()
                 .map(el -> (Tag_Compound) el)
