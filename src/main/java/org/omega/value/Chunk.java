@@ -5,9 +5,6 @@ import de.pauleff.jmcx.api.IChunk;
 import java.io.IOException;
 
 public record Chunk(int chunkX, int chunkZ, Section[] sections, long[] heightmap) {
-    public Chunk (int x, int z, int sectionCount, long[] heightmap) {
-        this(x, z, new Section[sectionCount], heightmap);
-    }
 
     public String getChunkCoordinates () {
         return "X " + chunkX + " Y " + chunkZ;
