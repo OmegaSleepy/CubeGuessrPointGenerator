@@ -81,7 +81,7 @@ public class SimpleAlgorithm implements IPointAlgorithm {
             if (passes > 10) return null;
         } while (isInvalidPoint(newPoint));
 
-        var resultCoordinate = new PointXYZ(newPoint.x(), heightmapValue-1, newPoint.z());
+        var resultCoordinate = new PointXYZ(newPoint.x(), heightmapValue, newPoint.z());
 
         pointXYZList.add(resultCoordinate);
         System.out.println(resultCoordinate + " GENERATED");
