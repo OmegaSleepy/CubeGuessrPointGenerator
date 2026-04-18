@@ -8,17 +8,16 @@ public record PointXZ(int x, int z) {
     }
 
     ///Calculate distance between two points in 2D
-    public double distanceXYZ(PointXZ other) {
+    public double distanceXZ(PointXZ other) {
         long dx = (long) other.x - x;
         long dz = (long) other.z - z;
         return dx * dx + dz * dz;
     }
 
     ///Returns `true` if distance is more than minDistance
-    public boolean proximityCheckXYZ(PointXZ other, double minDistance) {
+    public boolean isWithinRadius (PointXZ other, double radius) {
         long dx = (long) other.x - x;
         long dz = (long) other.z - z;
-
-        return distanceXYZ(other) > (minDistance * minDistance);
+        return (dx * dx + dz * dz) <= (radius * radius);
     }
 }
