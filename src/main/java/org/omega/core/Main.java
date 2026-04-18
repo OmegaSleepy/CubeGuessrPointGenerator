@@ -32,5 +32,12 @@ public class Main {
         });
     }
 
+    static void main () {
+        long start = System.currentTimeMillis();
+        var algorithm = new SimpleAlgorithm();
+        List<PointXYZ> points = algorithm.genPoints(100);
+        System.out.println("points = " + points);
+        System.out.println(((System.currentTimeMillis()-start)*1e-3) + "sec");
+    }
 
 }
