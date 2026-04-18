@@ -25,6 +25,8 @@ public class ChunkExtract {
                 .map(el -> el.getCompound("block_states"))
                 .map(el -> el.getLongArray("data")).toList();
 
-        return new Chunk(iChunk.getX(),iChunk.getZ(), Package.packageSections(sectionBlockPallets, sectionData));
+        long[] heightmap = iChunk.getNBTData().getCompound("Heightmaps").getLongArray("MOTION_BLOCKING_NO_LEAVES");
+
+        return new Chunk(iChunk.getX(),iChunk.getZ(), Package.packageSections(sectionBlockPallets, sectionData), heightmap);
     }
 }
