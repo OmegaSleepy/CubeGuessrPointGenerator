@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public record Chunk(int chunkX, int chunkZ, Section[] sections, long[] heightmap) {
 
-    public String getChunkCoordinates () {
-        return "X " + chunkX + " Y " + chunkZ;
+    public PointXZ getChunkCoordinates () {
+        return new PointXZ(chunkX, chunkZ);
     }
 
     public String getBlock (int x, int y, int z) {
@@ -22,17 +22,22 @@ public record Chunk(int chunkX, int chunkZ, Section[] sections, long[] heightmap
         return (section == null) ? "minecraft:air" : section.getBlock(x & 15, normalizedY & 15, z & 15);
     }
 
-    public int getHeightmap (int x, int z) {
-        int index = (x << 4) | z;
-        int bitsPerEntry = 9;
+    public int getHeightmap(int x, int z) {
+        int localX = x & 15;
+        int localZ = z & 15;
 
-        int bitsPerLong = 64 / bitsPerEntry;
-        int longIndex = index / bitsPerLong;
-        int bitOffset = (index % bitsPerLong) * bitsPerEntry;
+        int index = (localZ << 4) | localX;
+
+        int bitsPerEntry = 9;
+        int bitsPerLong = 64;
+        int valuesPerLong = bitsPerLong / bitsPerEntry; // 7 values
+
+        int longIndex = index / valuesPerLong;
+        int bitOffset = (index % valuesPerLong) * bitsPerEntry;
 
         long mask = (1L << bitsPerEntry) - 1;
 
-        return (int) ((heightmap[longIndex] >>> bitOffset) & mask);
+        return (int) ((heightmap[longIndex] >>> bitOffset) & mask)-64;
     }
 
     public static long[] getHeightmap (IChunk iChunk) throws IOException {
@@ -41,7 +46,7 @@ public record Chunk(int chunkX, int chunkZ, Section[] sections, long[] heightmap
         var heightmaps = iChunk.getNBTData().getCompound("Heightmaps");
         if (heightmaps == null) return null;
 
-        long[] data = heightmaps.getLongArray("MOTION_BLOCKING_NO_LEAVES");
+        long[] data = heightmaps.getLongArray(Heightmaps.WORLD_SURFACE.toString().toUpperCase());
         if (data == null || data.length == 0) return null;
 
         return data;
