@@ -2,7 +2,6 @@ package org.omega.value;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -43,11 +42,33 @@ public class World {
             regionCache.put(key, region);
             System.out.println("Loaded region: " + regionX + ", " + regionZ);
         }
-        
+
         int relChunkX = Math.floorMod(chunkX, 32);
         int relChunkZ = Math.floorMod(chunkZ, 32);
 
         return region.getChunks()[relChunkX][relChunkZ].getBlock(pointXYZ.x(), pointXYZ.y(), pointXYZ.z());
+    }
+
+    public static Region getRegion (PointXZ pointXZ) throws IOException {
+        RegionKey key = new RegionKey(pointXZ.x(), pointXZ.z());
+
+        Region region = regionCache.get(key);
+
+        if (region == null) {
+            File regionFile = new File("/home/martin/Documents/old world/s1/world/region/r.%s.%s.mca"
+                    .formatted(pointXZ.x(), pointXZ.z()));
+
+            if (!regionFile.exists()) {
+                return null;
+            }
+
+            region = new Region(pointXZ.x(), pointXZ.z(), regionFile);
+            regionCache.put(key, region);
+            System.out.println("Loaded region: " + pointXZ.x() + ", " + pointXZ.z());
+        }
+
+        return region;
+
     }
 
     public static void clearCache () {
