@@ -29,6 +29,10 @@ public class Chunk {
         return sections;
     }
 
+    public String getChunkCoordinates(){
+        return "X: " + chunkX + " Y: " + chunkZ;
+    }
+
     public String getBlock(int x, int y, int z) {
         int sectionIndex = y >> 4; // Same as y / 16
         if (sectionIndex < 0 || sectionIndex >= sections.length) return "minecraft:air";
