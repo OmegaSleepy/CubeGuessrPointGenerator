@@ -19,7 +19,7 @@ public class World {
     private record RegionKey(int x, int z) {
     }
 
-    public static String getBlock (PointXYZ pointXYZ) throws IOException {
+    public static String getBlock (PointXYZ pointXYZ) throws IOException, NullPointerException {
         int chunkX = pointXYZ.x() >> 4;
         int chunkZ = pointXYZ.z() >> 4;
 
@@ -40,7 +40,6 @@ public class World {
 
             region = new Region(regionX, regionZ, regionFile);
             regionCache.put(key, region);
-            System.out.println("Loaded region: " + regionX + ", " + regionZ);
         }
 
         int relChunkX = Math.floorMod(chunkX, 32);
@@ -64,7 +63,6 @@ public class World {
 
             region = new Region(pointXZ.x(), pointXZ.z(), regionFile);
             regionCache.put(key, region);
-            System.out.println("Loaded region: " + pointXZ.x() + ", " + pointXZ.z());
         }
 
         return region;
