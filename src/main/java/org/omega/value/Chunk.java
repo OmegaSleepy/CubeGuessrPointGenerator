@@ -9,11 +9,16 @@ public record Chunk(int chunkX, int chunkZ, Section[] sections) {
         return "X " + chunkX + " Y " + chunkZ;
     }
 
-    public String getBlock (int x, int y, int z) {
-        int sectionIndex = y >> 4; // Same as y / 16
+    public String getBlock(int x, int y, int z) {
+        int normalizedY = y + 64;
+
+        int sectionIndex = normalizedY >> 4;
+
         if (sectionIndex < 0 || sectionIndex >= sections.length) return "minecraft:air";
 
         Section section = sections[sectionIndex];
-        return (section == null) ? "minecraft:air" : section.getBlock(x & 15, y & 15, z & 15);
+
+        // 3. Use normalizedY for the relative coordinate (y & 15)
+        return (section == null) ? "minecraft:air" : section.getBlock(x & 15, normalizedY & 15, z & 15);
     }
 }
