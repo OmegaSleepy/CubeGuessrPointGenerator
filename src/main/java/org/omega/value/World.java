@@ -3,11 +3,19 @@ package org.omega.value;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class World {
 
-    private static final Map<RegionKey, Region> regionCache = new HashMap<>();
+
+    private static final int MAX_REGIONS = 32;
+    private static final Map<RegionKey, Region> regionCache = new LinkedHashMap<>(MAX_REGIONS, 0.75f, true) {
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<RegionKey, Region> eldest) {
+            return size() > MAX_REGIONS;
+        }
+    };
 
     private record RegionKey(int x, int z) {
     }
@@ -35,7 +43,7 @@ public class World {
             regionCache.put(key, region);
             System.out.println("Loaded region: " + regionX + ", " + regionZ);
         }
-
+        
         int relChunkX = Math.floorMod(chunkX, 32);
         int relChunkZ = Math.floorMod(chunkZ, 32);
 
