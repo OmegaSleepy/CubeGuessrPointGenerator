@@ -1,20 +1,20 @@
 package org.omega.logic;
 
-import org.omega.value.Point;
+import org.omega.value.PointXYZ;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface IPointAlgorithm {
-    default List<Point> genPoints (int number){
-        List<Point> points = new ArrayList<>();
+    default List<PointXYZ> genPoints (int number){
+        List<PointXYZ> pointXYZS = new ArrayList<>();
         for (int i = 0; i < number; i++) {
-            points.add(generatePoint());
+            pointXYZS.add(generatePoint());
         }
-        return points;
+        return pointXYZS;
     }
 
-    Point generatePoint ();
+    PointXYZ generatePoint ();
 
 
 }
