@@ -33,4 +33,12 @@ public class RandomPoint {
                 );
 
     }
+
+    public static PointXZ randomBoundPointXZ(int box) {
+        return new PointXZ
+                (
+                        random.nextInt(box),
+                        random.nextInt(box)
+                );
+    }
 }
