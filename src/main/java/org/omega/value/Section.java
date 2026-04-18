@@ -12,15 +12,17 @@ public class Section {
     }
 
     public String getBlock(int relX, int relY, int relZ) {
-        int bitsPerBlock = 4; // Calculated from palette size (9 entries)
-        int index = (relY << 8) | (relZ << 4) | relX; // Fast way to do (y*256 + z*16 + x)
+        int bitsPerBlock = Math.max(4, 32 - Integer.numberOfLeadingZeros(palette.size() - 1));
+
+        int index = (relY << 8) | (relZ << 4) | relX;
 
         int blocksPerLong = 64 / bitsPerBlock;
         int longIndex = index / blocksPerLong;
         int bitOffset = (index % blocksPerLong) * bitsPerBlock;
 
-        // Extract the value
-        int paletteIndex = (int) ((blockIds[longIndex] >>> bitOffset) & 0xF);
+        long mask = (1L << bitsPerBlock) - 1;
+
+        int paletteIndex = (int) ((blockIds[longIndex] >>> bitOffset) & mask);
 
         return palette.get(paletteIndex);
     }
