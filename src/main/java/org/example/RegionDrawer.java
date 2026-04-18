@@ -4,12 +4,14 @@ import de.pauleff.jmcx.api.IChunk;
 import de.pauleff.jmcx.api.IRegion;
 import de.pauleff.jmcx.formats.anvil.AnvilReader;
 import org.omega.core.Main;
-import org.omega.util.Heightmap;
+import org.omega.value.Chunk;
+import org.omega.value.Region;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,12 +19,12 @@ import java.util.concurrent.TimeUnit;
 
 import static org.omega.util.Bit.getHeight;
 
-public class Test {
+public class RegionDrawer {
 
     static final int MIN_COLOR = 0x000000;
     static final int MAX_COLOR = 0xFFFFFF;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main (String[] args) throws InterruptedException {
         File[] files = Main.world.listFiles();
 
         if (files == null) {
@@ -50,30 +52,25 @@ public class Test {
         }
     }
 
-    private static void processRegionFile(File file) throws IOException {
-        try (AnvilReader reader = new AnvilReader(file)) {
-            IRegion region = reader.readRegion();
-            if (region == null) return;
+    private static void processRegionFile (File file) throws IOException {
+        Region region = new Region(0,0, file);
+        Chunk[][] chunks = region.getChunks();
+        BufferedImage regionImage = new BufferedImage(512, 512, BufferedImage.TYPE_INT_RGB);
 
-            List<IChunk> chunks = region.getChunks();
-            if (chunks == null || chunks.isEmpty()) return;
+        Arrays.stream(chunks).sequential().forEach(chunkArray -> {
+            for (Chunk chunk : chunkArray) {
 
-            BufferedImage regionImage = new BufferedImage(512, 512, BufferedImage.TYPE_INT_RGB);
-
-            for (IChunk chunk : chunks) {
-                var data = Heightmap.getHeightmap(chunk);
-
-                drawChunk(regionImage, chunk, data);
+                drawChunk(regionImage, chunk, chunk.heightmap());
             }
+        });
 
-            ImageIO.write(regionImage, "png", new File("export/%s.png".formatted(file.getName())));
-        }
+        ImageIO.write(regionImage, "png", new File("export/%s.png".formatted(file.getName())));
     }
 
-    public static void drawChunk(BufferedImage image, IChunk chunk, long[] data) {
+    public static void drawChunk (BufferedImage image, Chunk chunk, long[] data) {
         // chunk position INSIDE region (0–31)
-        int baseX = (chunk.getX() & 31) * 16;
-        int baseZ = (chunk.getZ() & 31) * 16;
+        int baseX = chunk.chunkX();
+        int baseZ = chunk.chunkZ();
 
         int r1 = (MIN_COLOR >> 16) & 0xFF, g1 = (MIN_COLOR >> 8) & 0xFF, b1 = MIN_COLOR & 0xFF;
         int r2 = (MAX_COLOR >> 16) & 0xFF, g2 = (MAX_COLOR >> 8) & 0xFF, b2 = MAX_COLOR & 0xFF;
