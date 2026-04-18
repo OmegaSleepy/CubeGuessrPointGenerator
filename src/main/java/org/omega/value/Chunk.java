@@ -17,6 +17,18 @@ public class Chunk {
         this.sections = sections;
     }
 
+    public int getChunkX () {
+        return chunkX;
+    }
+
+    public int getChunkZ () {
+        return chunkZ;
+    }
+
+    public Section[] getSections () {
+        return sections;
+    }
+
     public String getBlock(int x, int y, int z) {
         int sectionIndex = y >> 4; // Same as y / 16
         if (sectionIndex < 0 || sectionIndex >= sections.length) return "minecraft:air";
