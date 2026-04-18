@@ -1,24 +1,41 @@
 package org.omega.value;
 
-import de.pauleff.jmcx.api.IChunk;
-import org.omega.logic.ChunkExtract;
+import org.omega.logic.AbstractedRegionReader;
+import org.omega.util.Clean;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class Region {
-    List<Chunk> chunks;
+    private final Chunk[][] chunks = new Chunk[32][32];
+    public final int x;
+    public final int z;
 
-    public Region (List<IChunk> chunks) {
-        this.chunks = chunks.stream().map(iChunk -> {
-                    try {
-                        return ChunkExtract.extract(iChunk);
-                    } catch (Exception e) {
-                        return null;
-                    }
-                }
-        ).toList();
-        for (Chunk chunk : this.chunks) {
-            System.out.println(chunk.getChunkCoordinates());
+    public Region(int x, int z, File mcaFile) throws IOException {
+        this.x = x;
+        this.z = z;
+
+        List<Chunk> chunkList = AbstractedRegionReader.readAndFormat(mcaFile);
+        chunkList = Clean.cleanNullChunks(chunkList);
+
+        for (Chunk chunk : chunkList) {
+            int localX = getLocal(chunk.chunkX());
+            int localZ = getLocal(chunk.chunkZ());
+
+            chunks[localX][localZ] = chunk;
         }
+    }
+
+    private int getLocal(int coord) {
+        return ((coord % 32) + 32) % 32;
+    }
+
+    public Chunk getChunk(int localX, int localZ) {
+        return chunks[localX][localZ];
+    }
+
+    public Chunk[][] getChunks () {
+        return chunks;
     }
 }
