@@ -14,7 +14,7 @@ public class AbstractedRegionReader {
 
         try (AnvilReader reader = new AnvilReader(mcaFile)) {
             var region = reader.readRegion();
-            return Clean.cleanNullChunks(region.getChunks());
+            return Clean.cleanNullIChunks(region.getChunks());
         } catch (Exception e) {
             throw e;
         }
