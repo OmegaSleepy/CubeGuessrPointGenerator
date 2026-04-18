@@ -36,4 +36,35 @@ public class StringStats {
 
         return csv.toString();
     }
+
+    public static String getFrequencyCSV(Map<String, Long> counts) {
+        if (counts == null || counts.isEmpty()) {
+            return "Value,Count,Percentage";
+        }
+
+        // Calculate the total sum of all counts to determine percentages
+        long totalSum = 0;
+        for (long count : counts.values()) {
+            totalSum += count;
+        }
+
+        StringBuilder csv = new StringBuilder();
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        csv.append("Value,Count,Percentage\n");
+
+        for (Map.Entry<String, Long> entry : counts.entrySet()) {
+            // Handle division by zero just in case totalSum is 0
+            double percentage = (totalSum == 0) ? 0.0 : (entry.getValue() * 100.0) / totalSum;
+
+            csv.append(entry.getKey())
+                    .append(",")
+                    .append(entry.getValue())
+                    .append(",")
+                    .append(df.format(percentage))
+                    .append("%\n");
+        }
+
+        return csv.toString();
+    }
 }
