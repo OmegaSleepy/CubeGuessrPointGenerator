@@ -6,14 +6,10 @@ import org.omega.util.Package;
 import org.omega.value.Chunk;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ChunkExtract {
     public static Chunk extract(IChunk iChunk) throws IOException {
-        //chunks -> 16x16x16 sections -> block palette -> List<String> block names -> print
-        Set<String> blocks = new HashSet<>();
 
         List<List<String>> sectionBlockPallets = iChunk.getNBTData().getList("sections").getData().stream()
                 .map(el -> (Tag_Compound) el)
