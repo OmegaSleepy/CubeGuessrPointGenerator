@@ -1,10 +1,17 @@
 package org.omega.core;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonWriter;
 import org.omega.core.algorithms.SimpleAlgorithm;
+import org.omega.value.CircleCenter;
 import org.omega.value.PointXYZ;
 import org.omega.value.PointXZ;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,19 +34,27 @@ public class Main {
                 int x = Integer.parseInt(matcher.group(1));
                 int z = Integer.parseInt(matcher.group(2));
 
-                 regionCoordinates.add(new PointXZ(x, z));
+                regionCoordinates.add(new PointXZ(x, z));
             }
         });
     }
 
-    static void main () {
+    static void main () throws IOException {
         long start = System.currentTimeMillis();
-        var algorithm = new SimpleAlgorithm();
-        List<PointXYZ> points = algorithm.genPoints(100);
+
+        var algorithm = new SimpleAlgorithm(List.of(new CircleCenter(new PointXYZ(650, 80, 560), 800)));
+
+        List<PointXYZ> points = algorithm.genPoints(10);
         points = points.stream().filter(Objects::nonNull).toList();
         System.out.println("points = " + points);
         System.out.println("points_count = " + points.size());
-        System.out.println(((System.currentTimeMillis()-start)*1e-3) + "sec");
+
+        Gson gson = new Gson();
+        Files.deleteIfExists(Path.of("export.json"));
+        Files.writeString(Path.of("export.json"), gson.toJson(points), StandardOpenOption.CREATE_NEW);
+        System.out.println(((System.currentTimeMillis() - start) * 1e-3) + "sec");
+
+
     }
 
 }
