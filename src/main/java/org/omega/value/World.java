@@ -98,6 +98,38 @@ public class World {
         return region.getChunk(relChunkX, relChunkZ);
 
     }
+    public static Chunk getChunk (PointXZ pointXZ) throws IOException {
+
+        int regionX = pointXZ.x() >> 5; // Same as / 32
+        int regionZ = pointXZ.z() >> 5;
+
+        RegionKey key = new RegionKey(regionX, regionZ);
+
+        Region region = regionCache.get(key);
+
+        if (region == null) {
+            File regionFile = new File("/home/martin/Documents/old world/s1/world/region/r.%s.%s.mca"
+                    .formatted(regionX, regionZ));
+
+            if (!regionFile.exists()) {
+                return null;
+            }
+
+            region = new Region(regionX, regionZ, regionFile);
+            regionCache.put(key, region);
+        }
+
+        return region.getChunk(pointXZ);
+
+    }
+
+    public static boolean chunkExists (PointXZ chunkCoord) {
+        try {
+            return getChunk(chunkCoord) != null;
+        } catch (IOException e) {
+            return false;
+        }
+    }
 
     public static void clearCache () {
         regionCache.clear();
