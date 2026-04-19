@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class World {
 
-
     private static final int MAX_REGIONS = 32;
     private static final Map<RegionKey, Region> regionCache = new LinkedHashMap<>(MAX_REGIONS, 0.75f, true) {
         @Override
