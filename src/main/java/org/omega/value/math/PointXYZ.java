@@ -23,4 +23,8 @@ public record PointXYZ(int x, int y, int z) {
 
         return distanceXYZ(other) > (minDistance * minDistance);
     }
+
+    public PointXZ toPointXZ(){
+        return new PointXZ(x, z);
+    }
 }
