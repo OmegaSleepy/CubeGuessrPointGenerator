@@ -67,4 +67,11 @@ public record Chunk(int chunkX, int chunkZ, Section[] sections, long[] heightmap
         return new PointXZ(localX, localZ);
     }
 
+    public static PointXZ getChunkPointXZFromGlobalBlockXZ (PointXZ currentPoint) {
+        int chunkX = currentPoint.x() >> 4;
+        int chunkZ = currentPoint.z() >> 4;
+
+        return new PointXZ(chunkX, chunkZ);
+    }
+
 }
