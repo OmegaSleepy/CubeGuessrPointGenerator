@@ -29,11 +29,11 @@ public class Region {
         }
     }
 
-    public static PointXZ getRegionPointXZFromGlobalBlockXZ (PointXZ currentPoint) {
-        int localX = currentPoint.x() / 512;
-        int localZ = currentPoint.z() / 512;
+    public static PointXZ getRegionPointXZFromGlobalBlockXZ(PointXZ currentPoint) {
+        int regionX = currentPoint.x() >> 9;
+        int regionZ = currentPoint.z() >> 9;
 
-        return new PointXZ(localX, localZ);
+        return new PointXZ(regionX, regionZ);
     }
 
     private int getLocal (int coord) {
