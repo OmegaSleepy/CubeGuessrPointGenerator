@@ -2,24 +2,28 @@ package org.omega.core.algorithms;
 
 import org.omega.logic.IPointAlgorithm;
 import org.omega.util.statistic.RandomPoint;
-import org.omega.value.*;
+import org.omega.value.math.CircleCenter;
+import org.omega.value.math.PointXYZ;
+import org.omega.value.math.PointXZ;
+import org.omega.value.minecraft.Chunk;
+import org.omega.value.minecraft.World;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Logger;
 
-public class SimpleAlgorithm implements IPointAlgorithm {
+public class CircleAreaAlgorithm implements IPointAlgorithm {
 
     private final Logger logger = Logger.getLogger("SimpleAlgorithm");
 
     private final List<PointXYZ> pointXYZList = new ArrayList<>();
-    private final int MIN_DISTANCE = 10;
+    private final int MIN_DISTANCE = 25;
 
     private final Random random = new Random();
 
     private final List<PointXZ> validChunkCoords;
 
-    public SimpleAlgorithm(List<CircleCenter> centers) {
+    public CircleAreaAlgorithm (List<CircleCenter> centers) {
         Set<PointXZ> chunksInRadius = new HashSet<>();
 
         for (CircleCenter circleCenter : centers) {
