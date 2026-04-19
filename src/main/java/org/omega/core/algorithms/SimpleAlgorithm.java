@@ -17,12 +17,9 @@ public class SimpleAlgorithm implements IPointAlgorithm {
 
     private final Random random = new Random();
 
-    private final List<CircleCenter> centers = List.of(
-            new CircleCenter(new PointXYZ(650, 80, 560), 800));
-
     private final List<PointXZ> validChunkCoords;
 
-    public SimpleAlgorithm () {
+    public SimpleAlgorithm(List<CircleCenter> centers) {
         Set<PointXZ> chunksInRadius = new HashSet<>();
 
         for (CircleCenter circleCenter : centers) {
@@ -30,18 +27,20 @@ public class SimpleAlgorithm implements IPointAlgorithm {
             int radius = circleCenter.radius();
             PointXZ centerXZ = new PointXZ(center.x(), center.z());
 
-            int minX = center.x() - radius;
-            int maxX = center.x() + radius;
-            int minZ = center.z() - radius;
-            int maxZ = center.z() + radius;
+            int minChunkX = (center.x() - radius) >> 4;
+            int maxChunkX = (center.x() + radius) >> 4;
+            int minChunkZ = (center.z() - radius) >> 4;
+            int maxChunkZ = (center.z() + radius) >> 4;
 
-            for (int x = minX; x <= maxX + 16; x += 16) {
-                for (int z = minZ; z <= maxZ + 16; z += 16) {
-                    PointXZ currentBlock = new PointXZ(Math.min(x, maxX), Math.min(z, maxZ));
-                    PointXZ chunkCoord = Chunk.getChunkPointXZFromGlobalBlockXZ(currentBlock);
+            for (int cx = minChunkX; cx <= maxChunkX; cx++) {
+                for (int cz = minChunkZ; cz <= maxChunkZ; cz++) {
 
-                    if (chunkCoord.isWithinRadius(centerXZ, radius)) {
-                        if (World.chunkExits(chunkCoord)){
+                    PointXZ chunkCoord = new PointXZ(cx, cz);
+
+                    PointXZ chunkCenterAsBlocks = new PointXZ((cx << 4) + 8, (cz << 4) + 8);
+
+                    if (chunkCenterAsBlocks.isWithinRadius(centerXZ, radius)) {
+                        if (World.chunkExists(chunkCoord)) {
                             chunksInRadius.add(chunkCoord);
                         }
                     }
@@ -99,19 +98,6 @@ public class SimpleAlgorithm implements IPointAlgorithm {
             }
         }
 
-        boolean nearCenter = false;
-
-        for (CircleCenter circleCenter : centers) {
-
-            var center = circleCenter.pointXYZ();
-            int maxDistance = circleCenter.radius();
-
-            if (pointXZ.isWithinRadius(new PointXZ(center.x(), center.z()), maxDistance)) {
-                nearCenter = true;
-                break;
-            }
-        }
-
-        return !nearCenter;
+        return false;
     }
 }
