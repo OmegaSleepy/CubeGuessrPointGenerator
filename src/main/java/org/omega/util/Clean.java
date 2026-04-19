@@ -1,7 +1,7 @@
 package org.omega.util;
 
 import de.pauleff.jmcx.api.IChunk;
-import org.omega.value.Chunk;
+import org.omega.value.minecraft.Chunk;
 
 import java.io.IOException;
 import java.util.List;

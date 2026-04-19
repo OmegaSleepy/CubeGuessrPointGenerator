@@ -1,4 +1,4 @@
-package org.omega.value;
+package org.omega.value.minecraft;
 
 public enum Heightmaps {
     WORLD_SURFACE,

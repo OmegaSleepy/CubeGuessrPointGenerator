@@ -1,11 +1,10 @@
 package org.omega.core;
 
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonWriter;
-import org.omega.core.algorithms.SimpleAlgorithm;
-import org.omega.value.CircleCenter;
-import org.omega.value.PointXYZ;
-import org.omega.value.PointXZ;
+import org.omega.core.algorithms.CircleAreaAndFallAlgorithm;
+import org.omega.value.math.CircleCenter;
+import org.omega.value.math.PointXYZ;
+import org.omega.value.math.PointXZ;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,7 @@
-package org.omega.value;
+package org.omega.value.minecraft;
+
+import org.omega.value.math.PointXYZ;
+import org.omega.value.math.PointXZ;
 
 import java.io.File;
 import java.io.IOException;

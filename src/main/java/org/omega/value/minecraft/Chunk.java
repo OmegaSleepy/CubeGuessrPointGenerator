@@ -1,6 +1,7 @@
-package org.omega.value;
+package org.omega.value.minecraft;
 
 import de.pauleff.jmcx.api.IChunk;
+import org.omega.value.math.PointXZ;
 
 import java.io.IOException;
 

@@ -5,8 +5,8 @@ import de.pauleff.jnbt.core.Tag;
 import de.pauleff.jnbt.core.Tag_Compound;
 import de.pauleff.jnbt.core.Tag_String;
 import org.omega.util.Package;
-import org.omega.value.Chunk;
-import org.omega.value.Heightmaps;
+import org.omega.value.minecraft.Chunk;
+import org.omega.value.minecraft.Heightmaps;
 
 import java.io.IOException;
 import java.util.HashSet;

@@ -1,18 +1,14 @@
 package org.example;
 
-import de.pauleff.jmcx.api.IChunk;
-import de.pauleff.jmcx.api.IRegion;
-import de.pauleff.jmcx.formats.anvil.AnvilReader;
 import org.omega.core.Main;
-import org.omega.value.Chunk;
-import org.omega.value.Region;
+import org.omega.value.minecraft.Chunk;
+import org.omega.value.minecraft.Region;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;

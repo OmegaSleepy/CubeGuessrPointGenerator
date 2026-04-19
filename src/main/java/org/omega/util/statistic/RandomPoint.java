@@ -1,7 +1,7 @@
 package org.omega.util.statistic;
 
-import org.omega.value.PointXYZ;
-import org.omega.value.PointXZ;
+import org.omega.value.math.PointXYZ;
+import org.omega.value.math.PointXZ;
 
 import java.util.Random;
 

@@ -1,6 +1,6 @@
 package org.omega.logic;
 
-import org.omega.value.PointXYZ;
+import org.omega.value.math.PointXYZ;
 
 import java.util.ArrayList;
 import java.util.List;

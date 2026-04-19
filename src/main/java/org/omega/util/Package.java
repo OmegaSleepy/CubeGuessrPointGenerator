@@ -1,6 +1,6 @@
 package org.omega.util;
 
-import org.omega.value.Section;
+import org.omega.value.minecraft.Section;
 
 import java.util.List;
 

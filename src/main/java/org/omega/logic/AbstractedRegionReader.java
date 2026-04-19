@@ -3,7 +3,7 @@ package org.omega.logic;
 import de.pauleff.jmcx.api.IChunk;
 import de.pauleff.jmcx.formats.anvil.AnvilReader;
 import org.omega.util.Clean;
-import org.omega.value.Chunk;
+import org.omega.value.minecraft.Chunk;
 
 import java.io.File;
 import java.io.IOException;

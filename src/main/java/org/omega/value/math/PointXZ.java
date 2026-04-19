@@ -1,4 +1,4 @@
-package org.omega.value;
+package org.omega.value.math;
 
 ///A point in 2D space
 public record PointXZ(int x, int z) {

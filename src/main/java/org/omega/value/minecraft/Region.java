@@ -1,7 +1,8 @@
-package org.omega.value;
+package org.omega.value.minecraft;
 
 import org.omega.logic.AbstractedRegionReader;
 import org.omega.util.Clean;
+import org.omega.value.math.PointXZ;
 
 import java.io.File;
 import java.io.IOException;
