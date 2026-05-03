@@ -110,7 +110,7 @@ public class World {
         Region region = regionCache.get(key);
 
         if (region == null) {
-            File regionFile = new File("/home/martin/Documents/old world/s1/world/region/r.%s.%s.mca"
+            File regionFile = new File(Main.world+"/r.%s.%s.mca"
                     .formatted(regionX, regionZ));
 
             if (!regionFile.exists()) {
