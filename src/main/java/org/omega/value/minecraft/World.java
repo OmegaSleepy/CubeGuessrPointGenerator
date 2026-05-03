@@ -1,5 +1,6 @@
 package org.omega.value.minecraft;
 
+import org.omega.core.Main;
 import org.omega.value.math.PointXYZ;
 import org.omega.value.math.PointXZ;
 
