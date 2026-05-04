@@ -14,12 +14,14 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
+import static org.omega.core.Main.putTime;
+
 public class PolygonAlgorithm implements IPointAlgorithm {
 
     private final Logger logger = Logger.getLogger("PolygonAlgorithm");
 
     private final List<PointXYZ> pointXYZList = new ArrayList<>();
-    private final int MIN_DISTANCE = 25;
+    private final int MIN_DISTANCE = 16;
 
     private final Random random = new Random();
 
@@ -63,6 +65,7 @@ public class PolygonAlgorithm implements IPointAlgorithm {
         }
         System.out.println(chunksInPolygon);
         this.validChunkCoords = chunksInPolygon;
+        putTime("polygon algorithm initialized");
     }
 
     @Override
@@ -79,7 +82,7 @@ public class PolygonAlgorithm implements IPointAlgorithm {
         }
 
         PointXZ randomCoordinate;
-        PointXZ newPoint;
+        PointXZ newPoint = null;
         int heightmapValue = 0;
 
         int passes = 0;

@@ -1,18 +1,14 @@
 package org.omega.core;
 
-import com.google.gson.Gson;
-import org.example.PointPlotter;
-import org.example.ToPoligon;
-import org.omega.core.algorithms.CircleAreaAndFallAlgorithm;
 import org.omega.core.algorithms.PolygonAlgorithm;
-import org.omega.value.math.*;
+import org.omega.io.Results;
+import org.omega.util.statistic.TimeSorter;
+import org.omega.value.math.BinnedPointSorting;
+import org.omega.value.math.PointXYZ;
+import org.omega.value.math.PointXZ;
+import org.omega.value.math.Polygon;
 
-import javax.imageio.ImageIO;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,24 +33,38 @@ public class Main {
         });
     }
 
-    static void main () throws IOException {
-        long start = System.currentTimeMillis();
+    public static Map<String, Long> splits = new HashMap<>();
+
+    public static void putTime (String msg) {
+        splits.put(msg, System.currentTimeMillis());
+    }
+
+    static void main () {
+        putTime("initial");
 
         List<PointXYZ> points = getPointXYZS();
+        putTime("points generated");
+
         points = points.stream().filter(Objects::nonNull).toList();
+        putTime("points null filtered");
+
         points = BinnedPointSorting.binnedPath(points, 700, 64);
+        putTime("points binned sorting");
+
+        points.removeFirst();
         BinnedPointSorting.untangle(points);
-        ImageIO.write(PointPlotter.plotPointsWithPath(points), "png", new File("points.png"));
+        putTime("points untangled");
 
         System.out.println("points = " + points);
         System.out.println("points_count = " + points.size());
 
-        Gson gson = new Gson();
-        Path out = Path.of("panorama_coords.json");
-        Files.deleteIfExists(out);
-        Files.writeString(out, gson.toJson(points), StandardOpenOption.CREATE_NEW);
-        System.out.println(((System.currentTimeMillis() - start) * 1e-3) + "sec");
+        Results.splitAndSave(points, 3);
+        putTime("points saved");
 
+        Results.plot(points);
+        putTime("points plotted");
+
+        TimeSorter.printTimestampMap(splits);
     }
 
     private static List<PointXYZ> getPointXYZS () {
@@ -74,7 +84,7 @@ public class Main {
 
         var algorithm = new PolygonAlgorithm(List.of(polygon));
 
-        return algorithm.genPoints(100);
+        return algorithm.genPoints(1200);
     }
 
 }
