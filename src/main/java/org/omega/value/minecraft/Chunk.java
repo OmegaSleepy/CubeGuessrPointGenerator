@@ -23,7 +23,7 @@ public record Chunk(int chunkX, int chunkZ, Section[] sections, long[] heightmap
         return (section == null) ? "minecraft:air" : section.getBlock(x & 15, normalizedY & 15, z & 15);
     }
 
-    public int getHeightmap(int x, int z) {
+    public int getHeightmap (int x, int z) {
         int localX = x & 15;
         int localZ = z & 15;
 
@@ -38,7 +38,7 @@ public record Chunk(int chunkX, int chunkZ, Section[] sections, long[] heightmap
 
         long mask = (1L << bitsPerEntry) - 1;
 
-        return (int) ((heightmap[longIndex] >>> bitOffset) & mask)-64;
+        return (int) ((heightmap[longIndex] >>> bitOffset) & mask) - 64;
     }
 
     public static long[] getHeightmap (IChunk iChunk) throws IOException {
@@ -54,14 +54,14 @@ public record Chunk(int chunkX, int chunkZ, Section[] sections, long[] heightmap
 
     }
 
-    public PointXZ getGlobalFromLocal(PointXZ local) {
-        int globalX = local.x() + chunkX*16;
-        int globalZ = local.z() + chunkZ*16;
+    public PointXZ getGlobalFromLocal (PointXZ local) {
+        int globalX = local.x() + chunkX * 16;
+        int globalZ = local.z() + chunkZ * 16;
 
         return new PointXZ(globalX, globalZ);
     }
 
-    public static PointXZ getLocalFromGlobal(PointXZ global) {
+    public static PointXZ getLocalFromGlobal (PointXZ global) {
         int localX = Math.floorMod(global.x(), 16);
         int localZ = Math.floorMod(global.z(), 16);
 

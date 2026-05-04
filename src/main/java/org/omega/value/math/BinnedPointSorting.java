@@ -88,16 +88,16 @@ public class BinnedPointSorting {
         return best;
     }
 
-    public static List<PointXYZ> untangle(List<PointXYZ> path) {
+    public static List<PointXYZ> untangle (List<PointXYZ> path) {
         boolean improved = true;
         while (improved) {
             improved = false;
             for (int i = 1; i < path.size() - 2; i++) {
                 for (int j = i + 1; j < path.size() - 1; j++) {
-                    double currentDist = path.get(i-1).distanceXYZ(path.get(i))
-                            + path.get(j).distanceXYZ(path.get(j+1));
-                    double swapDist    = path.get(i-1).distanceXYZ(path.get(j))
-                            + path.get(i).distanceXYZ(path.get(j+1));
+                    double currentDist = path.get(i - 1).distanceXYZ(path.get(i))
+                            + path.get(j).distanceXYZ(path.get(j + 1));
+                    double swapDist = path.get(i - 1).distanceXYZ(path.get(j))
+                            + path.get(i).distanceXYZ(path.get(j + 1));
 
                     if (swapDist < currentDist) {
                         // Reverse the segment between i and j

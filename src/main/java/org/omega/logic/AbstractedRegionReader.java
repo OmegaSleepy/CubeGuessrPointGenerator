@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class AbstractedRegionReader {
-    public static List<IChunk> read(File mcaFile) throws IOException {
+    public static List<IChunk> read (File mcaFile) throws IOException {
 
         try (AnvilReader reader = new AnvilReader(mcaFile)) {
             var region = reader.readRegion();
@@ -20,7 +20,7 @@ public class AbstractedRegionReader {
         }
     }
 
-    public static List<Chunk> readAndFormat(File mcaFile) throws IOException {
+    public static List<Chunk> readAndFormat (File mcaFile) throws IOException {
         List<IChunk> iChunks = read(mcaFile);
         return iChunks.stream().map(iChunk -> {
                     try {

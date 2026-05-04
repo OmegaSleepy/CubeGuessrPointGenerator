@@ -1,9 +1,7 @@
 package org.omega.util;
 
-import java.util.List;
-
 public class Bit {
-    public static int getHeight(long[] data, int index) {
+    public static int getHeight (long[] data, int index) {
         int bits = 9;
         int entriesPerLong = 64 / bits; // 7
 

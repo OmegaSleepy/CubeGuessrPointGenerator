@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class ChunkExtract {
 
-    public static Chunk extract(IChunk iChunk) throws IOException, NullPointerException{
+    public static Chunk extract (IChunk iChunk) throws IOException, NullPointerException {
 
         List<List<String>> sectionBlockPallets = iChunk.getNBTData().getList("sections").getData().stream()
                 .map(el -> (Tag_Compound) el)
@@ -52,14 +52,16 @@ public class ChunkExtract {
 
         long[] heightmap = iChunk.getNBTData().getCompound("Heightmaps").getLongArray(Heightmaps.WORLD_SURFACE.name().toUpperCase());
 
-        if (heightmap==null) throw new NullPointerException("Chunk at: " + iChunk.getX() + " " + iChunk.getZ() + " has a null heightmap");
-        return new Chunk(iChunk.getX(),iChunk.getZ(), Package.packageSections(sectionBlockPallets, sectionData), heightmap);
+        if (heightmap == null)
+            throw new NullPointerException("Chunk at: " + iChunk.getX() + " " + iChunk.getZ() + " has a null heightmap");
+        return new Chunk(iChunk.getX(), iChunk.getZ(), Package.packageSections(sectionBlockPallets, sectionData), heightmap);
     }
 
-    ///WARNING, THIS DOES NOT EXTRACT BLOCKS
-    public static Chunk extractFast(IChunk iChunk) throws IOException {
+    /// WARNING, THIS DOES NOT EXTRACT BLOCKS
+    public static Chunk extractFast (IChunk iChunk) throws IOException {
         long[] heightmap = iChunk.getNBTData().getCompound("Heightmaps").getLongArray(Heightmaps.WORLD_SURFACE.name().toUpperCase());
-        if (heightmap==null) throw new NullPointerException("Chunk at: " + iChunk.getX() + " " + iChunk.getZ() + " has a null heightmap");
-        return new Chunk(iChunk.getX(),iChunk.getZ(), null, heightmap);
+        if (heightmap == null)
+            throw new NullPointerException("Chunk at: " + iChunk.getX() + " " + iChunk.getZ() + " has a null heightmap");
+        return new Chunk(iChunk.getX(), iChunk.getZ(), null, heightmap);
     }
 }

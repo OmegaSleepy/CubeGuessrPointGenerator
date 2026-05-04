@@ -30,7 +30,7 @@ public class Region {
         }
     }
 
-    public static PointXZ getRegionPointXZFromGlobalBlockXZ(PointXZ currentPoint) {
+    public static PointXZ getRegionPointXZFromGlobalBlockXZ (PointXZ currentPoint) {
         int regionX = currentPoint.x() >> 9;
         int regionZ = currentPoint.z() >> 9;
 

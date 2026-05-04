@@ -49,7 +49,7 @@ public class RegionDrawer {
     }
 
     private static void processRegionFile (File file) throws IOException {
-        Region region = new Region(0,0, file);
+        Region region = new Region(0, 0, file);
         Chunk[][] chunks = region.getChunks();
         BufferedImage regionImage = new BufferedImage(512, 512, BufferedImage.TYPE_INT_RGB);
 

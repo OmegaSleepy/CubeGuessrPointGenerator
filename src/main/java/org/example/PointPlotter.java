@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PointPlotter {
 
-    public static BufferedImage plotPointsWithPath(List<PointXYZ> points) {
+    public static BufferedImage plotPointsWithPath (List<PointXYZ> points) {
         if (points == null || points.isEmpty()) {
             throw new IllegalArgumentException("Point list is empty or null");
         }
@@ -54,7 +54,7 @@ public class PointPlotter {
         }
 
         // === Draw points ===
-        int pointSize = 64; // (16*4)
+        int pointSize = 8; // (16*4)
 
         for (int i = 0; i < n; i++) {
             PointXYZ p = points.get(i);

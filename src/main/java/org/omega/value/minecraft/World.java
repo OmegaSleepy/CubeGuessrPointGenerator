@@ -14,7 +14,7 @@ public class World {
     private static final int MAX_REGIONS = 32;
     private static final Map<RegionKey, Region> regionCache = new LinkedHashMap<>(MAX_REGIONS, 0.75f, true) {
         @Override
-        protected boolean removeEldestEntry(Map.Entry<RegionKey, Region> eldest) {
+        protected boolean removeEldestEntry (Map.Entry<RegionKey, Region> eldest) {
             return size() > MAX_REGIONS;
         }
     };
@@ -48,7 +48,7 @@ public class World {
         int relChunkX = Math.floorMod(chunkX, 32);
         int relChunkZ = Math.floorMod(chunkZ, 32);
 
-        return region.getChunk(relChunkX,relChunkZ).getBlock(pointXYZ.x(), pointXYZ.y(), pointXYZ.z());
+        return region.getChunk(relChunkX, relChunkZ).getBlock(pointXYZ.x(), pointXYZ.y(), pointXYZ.z());
     }
 
     public static Region getRegion (PointXZ pointXZ) throws IOException {
@@ -101,6 +101,7 @@ public class World {
         return region.getChunk(relChunkX, relChunkZ);
 
     }
+
     public static Chunk getChunk (PointXZ pointXZ) throws IOException {
 
         int regionX = pointXZ.x() >> 5; // Same as / 32
@@ -111,7 +112,7 @@ public class World {
         Region region = regionCache.get(key);
 
         if (region == null) {
-            File regionFile = new File(Main.world+"/r.%s.%s.mca"
+            File regionFile = new File(Main.world + "/r.%s.%s.mca"
                     .formatted(regionX, regionZ));
 
             if (!regionFile.exists()) {

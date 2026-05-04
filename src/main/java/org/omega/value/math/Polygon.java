@@ -3,11 +3,11 @@ package org.omega.value.math;
 import java.util.List;
 
 public record Polygon(List<PointXZ> vertices) {
-    public int edgeCount() {
+    public int edgeCount () {
         return vertices.size();
     }
 
-    public boolean isPointInPolygon(PointXZ test) {
+    public boolean isPointInPolygon (PointXZ test) {
         boolean inside = false;
         int n = vertices.size();
 
@@ -18,7 +18,7 @@ public record Polygon(List<PointXZ> vertices) {
             // Check if the point's Z coordinate is between the edge's Z coordinates
             // AND if the point is to the left of the intersection of the edge with the ray
             if (((pi.z() > test.z()) != (pj.z() > test.z())) &&
-                    (test.x() < (double)(pj.x() - pi.x()) * (test.z() - pi.z()) / (pj.z() - pi.z()) + pi.x())) {
+                    (test.x() < (double) (pj.x() - pi.x()) * (test.z() - pi.z()) / (pj.z() - pi.z()) + pi.x())) {
                 inside = !inside;
             }
         }

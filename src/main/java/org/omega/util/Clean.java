@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Clean {
-    public static List<IChunk> cleanNullIChunks(List<IChunk> chunks){
+    public static List<IChunk> cleanNullIChunks (List<IChunk> chunks) {
         return chunks.stream().filter(chunk -> {
             try {
                 return !chunk.getNBTData().isEmpty();
@@ -18,7 +18,7 @@ public class Clean {
         }).toList();
     }
 
-    public static List<Chunk> cleanNullChunks(List<Chunk> chunks){
+    public static List<Chunk> cleanNullChunks (List<Chunk> chunks) {
         return chunks.stream().filter(Objects::nonNull).toList();
     }
 }

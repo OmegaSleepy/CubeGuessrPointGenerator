@@ -1,13 +1,13 @@
 package org.omega.util.statistic;
 
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import java.text.DecimalFormat;
 
 public class StringStats {
 
-    public static String getFrequencyCSV(List<String> inputList) {
+    public static String getFrequencyCSV (List<String> inputList) {
         if (inputList == null || inputList.isEmpty()) {
             return "Value,Count,Percentage";
         }
@@ -37,7 +37,7 @@ public class StringStats {
         return csv.toString();
     }
 
-    public static String getFrequencyCSV(Map<String, Long> counts) {
+    public static String getFrequencyCSV (Map<String, Long> counts) {
         if (counts == null || counts.isEmpty()) {
             return "Value,Count,Percentage";
         }
