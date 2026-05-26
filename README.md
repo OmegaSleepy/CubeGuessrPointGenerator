@@ -17,10 +17,10 @@ CubeGuessrPointGenerator is the data layer backbone for [WhereTheChunkAmI](https
 ### How It Works
 
 Points are intelligently filtered to ensure quality:
-- ❌ Excludes points in the air
-- ❌ Excludes points in oceans
-- ❌ Excludes points underground
-- ✅ Returns only valid, explorable surface locations
+- Excludes points in the air
+- Excludes points in oceans
+- Excludes points underground
+- Returns only valid, explorable surface locations
 
 ## Technology Stack
 
@@ -29,11 +29,6 @@ Points are intelligently filtered to ensure quality:
 - **Core Dependency**: [pauleff's jmcx](https://github.com/pauleff/jmcx) (with custom abstraction layer)
 
 ## Getting Started
-
-### Prerequisites
-
-- Java 25+
-- Maven 3.6+
 
 ### Building
 
@@ -50,7 +45,7 @@ Configuration is handled in `org.omega.core.Main`'s `main` method. Here's what y
 Modify the world file path at the top of the `Main` class definition:
 
 ```java
-private static final File WORLD_PATH = new File("/path/to/your/minecraft/world");
+public static final File world = new File("/path/to/your/world/region/folder");
 ```
 
 #### 2. **Define Regions of Interest**
@@ -116,10 +111,11 @@ CubeGuessrPointGenerator is highly optimized:
 This is part of the **WhereTheChunkAmI** project ecosystem:
 - **Frontend**: [WhereTheChunkAmI-frontend](https://github.com/Neptune4918/WhereTheChunkAmI-frontend) by Neptune4918
 - **Purpose**: Create a geoguessr-style guessing game using Minecraft world data
+- **Panorama-taking**: [Panorama Taker Mod](https://github.com/OmegaSleepy/minecraftPanoramaMakerMod) by me again
 
 ## License
 
-[Specify your license here]
+[MIT]
 
 ## Contributing
 
@@ -130,4 +126,4 @@ Contributions welcome! Feel free to:
 
 ## Author
 
-OmegaSleepy
+OmegaSleepy (me)
